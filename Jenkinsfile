@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git '<https://github.com/Amitesh591/calculator_devops>'
+        git clone 'https://github.com/Amitesh591/calculator_devops'
       }
     }
     stage('Build Executable Jar'){
