@@ -20,17 +20,15 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          dockerImageLatest = docker.build registry + ":latest"
+          sh 'dockerImage = docker.build registry + ":$BUILD_NUMBER"'
+          sh 'dockerImageLatest = docker.build registry + ":latest"'
         }
       }
     }
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( 'https://registry.hub.docker.com', 'docker-hub-credentials' ) {
-            dockerImage.push()
-            dockerImageLatest.push()
+         sh 'docker.withRegistry( 'https://registry.hub.docker.com', 'docker-hub-credentials' ) {dockerImage.push() dockerImageLatest.push()'
           }
         }
       }
