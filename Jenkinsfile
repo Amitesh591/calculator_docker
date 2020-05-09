@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Build Executable Jar'){
         steps {
-             sh 'mvn clean compile test '
+             sh 'mvn clean compile testpackage '
         }
     }
     stage('Building image') {
