@@ -26,6 +26,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <distributionManagement>
+  <snapshotRepository>
+    <id>calculator</id>
+    <name>calculator</name>
+    <url>http://localhost:8081/repository/calculator/</url>
+  </snapshotRepository>
+  </distributionManagement>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
