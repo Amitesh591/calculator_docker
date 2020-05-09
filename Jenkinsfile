@@ -1,21 +1,46 @@
 pipeline {
-  agent any
-  stages 
-    {
-    stage('Clean') {
-      steps {
-        sh 'mvn clean'
-      }
-    }
-    stage('Compile') {
-      steps {
-        sh 'mvn compile'
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'mvn test'
-      }
-    }
+  environment {
+    registry = "<amitesh57484>/<calculator1>"
+    registryCredential = 'docker-hub-credentials'
+    dockerImage = ''
+    dockerImageLatest = ''
   }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git '<https://github.com/Amitesh591/calculator_devops>'
+      }
+    }
+    stage('Build Executable Jar'){
+        steps {
+             sh 'mvn clean compile test '
+        }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImageLatest = docker.build registry + ":latest"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push()
+            dockerImageLatest.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+    
+  }
+  
 }
