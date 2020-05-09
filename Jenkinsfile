@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "<amitesh57484>/<calculator1>"
+    registry = "https://registry.hub.docker.com/amitesh57484/calculator1"
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
     dockerImageLatest = ''
@@ -28,7 +28,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+          docker.withRegistry( 'https://registry.hub.docker.com', 'docker-hub-credentials' ) {
             dockerImage.push()
             dockerImageLatest.push()
           }
