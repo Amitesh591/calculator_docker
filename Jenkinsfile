@@ -9,12 +9,12 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        sh 'git clone https://github.com/Amitesh591/calculator_devops'
+        sh git pull https://github.com/Amitesh591/calculator_devops'
       }
     }
     stage('Build Executable Jar'){
         steps {
-             sh 'mvn clean compile testpackage '
+             sh 'mvn clean compile test package '
         }
     }
     stage('Building image') {
