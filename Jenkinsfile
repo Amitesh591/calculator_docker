@@ -1,26 +1,27 @@
 pipeline {
-  environment {
-    registry = "https://registry.hub.docker.com/amitesh57484/calculator1"
-    registryCredential = 'docker-hub-credentials'
-    dockerImage = ''
-    dockerImageLatest = ''
-  }
   agent any
-  stages {
-    stage('Cloning Git') {
+  stages 
+    {
+    stage('Clean') {
       steps {
-         checkout scm
+        sh 'mvn clean'
       }
     }
-    stage('Build Executable Jar'){
-        steps {
-             sh 'mvn clean compile test package '
-        }
+    stage('Compile') {
+      steps {
+        sh 'mvn compile'
+      }
     }
-    
-   
-   
-    
+    stage('Test') {
+      steps {
+        sh 'mvn test'
+      }
+    }
+
+    stage('Package') {
+      steps {
+        sh 'mvn install'
+      }
+    }
   }
-  
 }
