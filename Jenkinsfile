@@ -18,10 +18,6 @@ pipeline {
       }
     }
 
-    stage('Package') {
-      steps {
-        sh 'mvn install'
-      }
-    }
+    
   }
 }
